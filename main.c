@@ -35,8 +35,8 @@ int main() {
                 listContacts(&addressBook/*,sortChoice*/);
                 break;
             case 6:
+                saveAndExit(&addressBook);
                 printf("Saving and Exiting...\n");
-                //saveContactsToFile(&addressBook);
                 break;
             default:
                 printf("Invalid choice. Please try again.\n");

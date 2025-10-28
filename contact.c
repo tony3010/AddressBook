@@ -10,20 +10,22 @@ void listContacts(AddressBook *addressBook/*, int sortCriteria*/)
     for(int i=0;i<addressBook->contactCount;i++){
         printf("%-20s %-15s %-25s\n",addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
     }
-    // Sort contacts based on the chosen criteria
     
-}
+    
+}   
+
+
 
 void initialize(AddressBook *addressBook) {
     addressBook->contactCount = 0;
-    populateAddressBook(addressBook);
+    //populateAddressBook(addressBook);
     
-    // Load contacts from file during initialization (After files)
-    //loadContactsFromFile(addressBook);
-}
+   loadContactsFromFile(addressBook);
+   }
+ 
 
 void saveAndExit(AddressBook *addressBook) {
-    saveContactsToFile(addressBook); // Save contacts to file
+    saveContactsToFile(addressBook);
     exit(EXIT_SUCCESS); // Exit the program
 }
 
@@ -167,7 +169,7 @@ void searchContact(AddressBook *addressBook)
         for (int i = 0; i < addressBook->contactCount; i++)
         {
             
-            if (strstr(phone,addressBook->contacts[i].phone))
+            if (strcmp(addressBook->contacts[i].phone,phone)==0)
             {   flag=1;
                 printf("%s\t\t%s\t\t%s\n",addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
             }
@@ -188,7 +190,7 @@ void searchContact(AddressBook *addressBook)
         for (int i = 0; i < addressBook->contactCount; i++)
         {
             
-            if (strstr(email,addressBook->contacts[i].email))
+            if (strcmp(email,addressBook->contacts[i].email)==0)
             {   flag=1;
                 printf("%s\t\t%s\t\t%s\n",addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
             }
@@ -247,15 +249,15 @@ void editContact(AddressBook *addressBook)
     {
     case 1:
         printf("Enter new name: ");
-        scanf(" %[^\n]", addressBook->contacts[idx].name);
+        scanf(" %[^\n]", addressBook->contacts[i].name);
         break;
     case 2:
         printf("Enter new phone: ");
-        scanf("%s", addressBook->contacts[idx].phone);
+        scanf("%s", addressBook->contacts[i].phone);
         break;
     case 3:
         printf("Enter new email: ");
-        scanf("%s", addressBook->contacts[idx].email);
+        scanf("%s", addressBook->contacts[i].email);
         break;
     default:
         printf("Invalid option.\n");
@@ -263,7 +265,7 @@ void editContact(AddressBook *addressBook)
     }
 
     printf("\nContact updated\n");
-    printf("%s\t\t%s\t\t%s\n",addressBook->contacts[idx].name,addressBook->contacts[idx].phone,addressBook->contacts[idx].email);
+    printf("%s\t\t%s\t\t%s\n",addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
 }
 
     
