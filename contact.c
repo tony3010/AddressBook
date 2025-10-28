@@ -4,6 +4,7 @@
 #include "contact.h"
 #include "file.h"
 #include "populate.h"
+#include <ctype.h>
 
 void listContacts(AddressBook *addressBook/*, int sortCriteria*/) 
 {
@@ -248,18 +249,99 @@ void editContact(AddressBook *addressBook)
     switch (choice)
     {
     case 1:
+        char name[50];
         printf("Enter new name: ");
-        scanf(" %[^\n]", addressBook->contacts[i].name);
+        scanf(" %[^\n]", name);
+        check: int valid=1;
+        for(int i=0;i<strlen(name);i++){
+        if (isdigit(name[i])){
+        
+        valid=0;
+        break;}
+        }
+        while (valid==0)
+        {
+        printf("Enter a valid name: ");
+        getchar();
+        scanf("%[^\n]",name);
+        goto check;
+        }
+        strcpy(addressBook->contacts[i].name, name);
         break;
     case 2:
+        char phone[20];
         printf("Enter new phone: ");
-        scanf("%s", addressBook->contacts[i].phone);
+        scanf("%s",phone);
+    
+    checknum:
+    valid=1;
+    if(strlen(phone)!=10)
+        valid=0;
+
+    {for(int i=0;i<strlen(phone);i++){
+     if (!isdigit(phone[i])){
+        
+        valid=0;
+        break;}
+    }}
+    
+    
+    if (valid==1)
+    {
+     for(int i = 0; i < addressBook->contactCount; i++)
+        {
+            
+           if (strcmp(addressBook->contacts[i].phone,phone) == NULL) {
+                printf("Duplicate phone ! Enter a unique Phone number\n ");
+                valid=0; 
+                break;
+            }
+            
+        }}
+    
+    
+    while (valid==0)
+    {
+        printf("Enter a valid phone number: ");
+        getchar();
+        scanf("%[^\n]",phone);
+        goto checknum;
+    }
+        strcpy(addressBook->contacts[i].phone, phone);
+
         break;
     case 3:
+        char email[50];
         printf("Enter new email: ");
-        scanf("%s", addressBook->contacts[i].email);
+        scanf("%s",email);
+        checkmail:
+        valid=1;
+        if (strchr(email,'@')==NULL||strstr(email,".com")==NULL)
+        valid=0;
+    
+        if (valid==1)
+        {
+        for(int i = 0; i < addressBook->contactCount; i++)
+        {
+            
+           if (strcmp(addressBook->contacts[i].email,email) == NULL) {
+                printf("Duplicate mail ! Enter a unique email\n ");
+                valid=0; 
+                break;
+            }
+            
+        }}
+    
+        while (valid==0)
+        {
+        printf("Enter a valid email: ");
+        getchar();
+        scanf("%[^\n]",email);
+        goto checkmail;
+        }
+        strcpy(addressBook->contacts[i].email, email);
         break;
-    default:
+        default:
         printf("Invalid option.\n");
         return;
     }
