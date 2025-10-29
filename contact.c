@@ -220,7 +220,7 @@ void searchContact(AddressBook *addressBook)  //Function to search contact in li
     }
 }
 
-void editContact(AddressBook *addressBook)
+void editContact(AddressBook *addressBook)  //function to edit existing contact
 {
     
     char name[50];
@@ -376,7 +376,7 @@ void editContact(AddressBook *addressBook)
     
 
 
-void deleteContact(AddressBook *addressBook)
+void deleteContact(AddressBook *addressBook)    //function to perform deletion 
 {
 	
     char name[50];
