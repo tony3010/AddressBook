@@ -1,3 +1,12 @@
+/*Name:Tony Chacko Thomas
+Date:29/10/2025
+Description:Address Book project
+*/
+
+
+
+
+
 #include <stdio.h>
 #include "contact.h"
 
@@ -6,7 +15,7 @@ int main() {
     AddressBook addressBook;
     initialize(&addressBook); // Initialize the address book
 
-    do {
+    do {                                    
         printf("\nAddress Book Menu:\n");
         printf("1. Create contact\n");
         printf("2. Search contact\n");
@@ -17,8 +26,9 @@ int main() {
         printf("7. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
+        getchar();
         
-        switch (choice) {
+        switch (choice) {                       //choose which function to perform
             case 1:
                 createContact(&addressBook);
                 break;
@@ -41,7 +51,7 @@ int main() {
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while (choice != 7);
+    } while (choice != 7); // Terminate program when 7 is entered
     
        return 0;
 }

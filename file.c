@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "file.h"
 
-void saveContactsToFile(AddressBook *addressBook) {
+void saveContactsToFile(AddressBook *addressBook) {         //File I/O Program to save the contacts into contacts.txt
     FILE *fp=fopen("contacts.txt","w");
         fprintf(fp,"%d\n",addressBook->contactCount);
         for (int i = 0; i < addressBook->contactCount; i++)
@@ -13,7 +13,7 @@ void saveContactsToFile(AddressBook *addressBook) {
   
 }
 
-void loadContactsFromFile(AddressBook *addressBook){
+void loadContactsFromFile(AddressBook *addressBook){        //File I/O Program to load the contacts into program from contacts.txt
         FILE *fp=fopen("contacts.txt","r");
         fscanf(fp,"%d\n",&addressBook->contactCount);
         for (int i = 0; i < addressBook->contactCount; i++)

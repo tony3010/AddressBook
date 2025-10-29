@@ -6,7 +6,7 @@
 #include "populate.h"
 #include <ctype.h>
 
-void listContacts(AddressBook *addressBook/*, int sortCriteria*/) 
+void listContacts(AddressBook *addressBook/*, int sortCriteria*/) //Function to list out the contacts stored in program
 {
     for(int i=0;i<addressBook->contactCount;i++){
         printf("%-20s %-15s %-25s\n",addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
@@ -19,27 +19,26 @@ void listContacts(AddressBook *addressBook/*, int sortCriteria*/)
 
 void initialize(AddressBook *addressBook) {
     addressBook->contactCount = 0;
-    //populateAddressBook(addressBook);
+    //populateAddressBook(addressBook); //line to load dummy contacts from populate file
     
-   loadContactsFromFile(addressBook);
+   loadContactsFromFile(addressBook);  //Performs load contact function from file.c
    }
  
 
-void saveAndExit(AddressBook *addressBook) {
-    saveContactsToFile(addressBook);
+void saveAndExit(AddressBook *addressBook) { //Function to save contacts to txt file and exit
+    saveContactsToFile(addressBook);//save contacts to .txt file
     exit(EXIT_SUCCESS); // Exit the program
 }
 
 
-void createContact(AddressBook *addressBook)
+void createContact(AddressBook *addressBook)//Function to create a new contact
 {   
-    #include <ctype.h>
+    
     char name[100],phone[11],email[100];
-	printf("Enter the name: ");
-    getchar();
+	printf("Enter the name: ");             //get Name of new contact
     scanf("%[^\n]",name);
     
-    check: int valid=1;
+    check: int valid=1;                     //check if the given name is valid and run untll a valid name is entered
     for(int i=0;i<strlen(name);i++){
      if (isdigit(name[i])){
         
@@ -53,11 +52,10 @@ void createContact(AddressBook *addressBook)
         scanf("%[^\n]",name);
         goto check;
     }
-    printf("Enter the phone number: ");
-    getchar();
-    scanf("%[^\n]",phone);
+    printf("Enter the phone number: ");         //get Phone of new contact
+    scanf("%s",phone);
     
-    checknum:
+    checknum:                                   //check if the given phone is valid and run untll a valid phone is entered
     valid=1;
     if(strlen(phone)!=10)
         valid=0;
@@ -75,8 +73,8 @@ void createContact(AddressBook *addressBook)
      for(int i = 0; i < addressBook->contactCount; i++)
         {
             
-           if (strcmp(addressBook->contacts[i].phone,phone) == NULL) {
-                printf("Duplicate phone ! Enter a unique Phone number\n ");
+           if (strcmp(addressBook->contacts[i].phone,phone) == 0) {
+                printf("Duplicate phone ! Enter a unique Phone number\n");
                 valid=0; 
                 break;
             }
@@ -87,17 +85,15 @@ void createContact(AddressBook *addressBook)
     while (valid==0)
     {
         printf("Enter a valid phone number: ");
-        getchar();
-        scanf("%[^\n]",phone);
+        scanf("%s",phone);
         goto checknum;
     }
     
-    printf("Enter the email: ");
-    getchar();
-    scanf("%[^\n]",email);
+    printf("Enter the email: ");                                    //get Mail of new contact
+    scanf("%s",email);
     
     
-    checkmail:
+    checkmail:                                                      //check if the given email is valid and run untll a valid email is entered
     valid=1;
     if (strchr(email,'@')==NULL||strstr(email,".com")==NULL)
         valid=0;
@@ -107,8 +103,8 @@ void createContact(AddressBook *addressBook)
      for(int i = 0; i < addressBook->contactCount; i++)
         {
             
-           if (strcmp(addressBook->contacts[i].email,email) == NULL) {
-                printf("Duplicate mail ! Enter a unique email\n ");
+           if (strcmp(addressBook->contacts[i].email,email) == 0) {
+                printf("Duplicate mail ! Enter a unique email\n");
                 valid=0; 
                 break;
             }
@@ -118,11 +114,10 @@ void createContact(AddressBook *addressBook)
     while (valid==0)
     {
         printf("Enter a valid email: ");
-        getchar();
-        scanf("%[^\n]",email);
+        scanf("%s",email);
         goto checkmail;
     }
-    int i = addressBook->contactCount;
+    int i = addressBook->contactCount;                 //copy the contact details to addressbook
     strcpy(addressBook->contacts[i].name, name);
     strcpy(addressBook->contacts[i].phone, phone);
     strcpy(addressBook->contacts[i].email, email);
@@ -132,7 +127,7 @@ void createContact(AddressBook *addressBook)
     
 }
 
-void searchContact(AddressBook *addressBook) 
+void searchContact(AddressBook *addressBook)  //Function to search contact in list
 {
     int choice;
     int flag=0;
@@ -205,7 +200,6 @@ void searchContact(AddressBook *addressBook)
         char email[50];
         printf("Enter the email of the contact\n");
         scanf("%s",email);
-        getchar();
         
         for (int i = 0; i < addressBook->contactCount; i++)
         {
@@ -232,7 +226,6 @@ void editContact(AddressBook *addressBook)
     char name[50];
     printf("Enter the name of the contact\n");
     scanf(" %[^\n]",name);
-    getchar();
     
     int found[100],foundCount=0,idx=1;
     for (int i = 0; i < addressBook->contactCount; i++)
@@ -320,8 +313,8 @@ void editContact(AddressBook *addressBook)
         for(int i = 0; i < addressBook->contactCount; i++)
             {
                 
-            if (strcmp(addressBook->contacts[i].phone,phone) == NULL) {
-                    printf("Duplicate phone ! Enter a unique Phone number\n ");
+            if (strcmp(addressBook->contacts[i].phone,phone) == 0) {
+                    printf("Duplicate phone ! Enter a unique Phone number\n");
                     valid=0; 
                     break;
                 }
@@ -331,9 +324,8 @@ void editContact(AddressBook *addressBook)
         
         while (valid==0)
         {
-            printf("Enter a valid phone number: ");
-            getchar();
-            scanf("%[^\n]",phone);
+            printf("Enter a valid phone number:");
+            scanf("%s",phone);
             goto checknum;
         }
             strcpy(addressBook->contacts[i].phone, phone);
@@ -353,8 +345,8 @@ void editContact(AddressBook *addressBook)
             for(int i = 0; i < addressBook->contactCount; i++)
             {
                 
-            if (strcmp(addressBook->contacts[i].email,email) == NULL) {
-                    printf("Duplicate mail ! Enter a unique email\n ");
+            if (strcmp(addressBook->contacts[i].email,email) == 0) {
+                    printf("Duplicate mail ! Enter a unique email\n");
                     valid=0; 
                     break;
                 }
@@ -364,8 +356,7 @@ void editContact(AddressBook *addressBook)
             while (valid==0)
             {
             printf("Enter a valid email: ");
-            getchar();
-            scanf("%[^\n]",email);
+            scanf("%s",email);
             goto checkmail;
             }
             strcpy(addressBook->contacts[i].email, email);
