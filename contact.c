@@ -209,15 +209,18 @@ void searchContact(AddressBook *addressBook)
 
 void editContact(AddressBook *addressBook)
 {
+    
     char name[50];
     printf("Enter the name of the contact\n");
     scanf(" %[^\n]",name);
+    getchar();
+    
     int found[100],foundCount=0,idx=1;
     for (int i = 0; i < addressBook->contactCount; i++)
         {
             
            if (strcasestr(addressBook->contacts[i].name,name) != NULL) {
-                printf("%s\t\t%s\t\t%s\n",addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
+                printf("%d.%-20s %-15s %-25s\n",foundCount+1,addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
                 found[foundCount++]=i;
             }
             
@@ -230,6 +233,12 @@ void editContact(AddressBook *addressBook)
     {
         printf("Choose index of contact to edit:\n");
         scanf("%d",&idx);
+        while (idx>foundCount)
+        {
+            printf("Enter valid index\n");
+            scanf("%d",&idx);
+        }
+        
 
 
     }
@@ -364,7 +373,7 @@ void deleteContact(AddressBook *addressBook)
         {
             
            if (strcasestr(addressBook->contacts[i].name,name) != NULL) {
-                printf("%s\t\t%s\t\t%s\n",addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
+                printf("%d. %-25s %-15s %--25s\n",foundCount+1,addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
                 found[foundCount++]=i;
             }
             
@@ -377,6 +386,11 @@ void deleteContact(AddressBook *addressBook)
         {
         printf("Choose index of contact to delete:\n");
         scanf("%d",&idx);
+        while (idx>foundCount)
+        {
+            printf("Enter valid index\n");
+            scanf("%d",&idx);
+        }
 
 
         }
@@ -389,4 +403,5 @@ void deleteContact(AddressBook *addressBook)
         strcpy(addressBook->contacts[i].email,addressBook->contacts[i+1].email);}
     addressBook->contactCount--;
         }
+        printf("\nContact deleted\n");
 }
